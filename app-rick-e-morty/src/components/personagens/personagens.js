@@ -9,6 +9,7 @@ import {
   FormControl,
   FormLabel,
   Grid,
+  Modal,
   Paper,
   Table,
   TableBody,
@@ -19,7 +20,18 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function Personagem() {
   const [listaPersonagens, setListaPersonagens] = useState([]);
@@ -27,6 +39,10 @@ export default function Personagem() {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -37,39 +53,30 @@ export default function Personagem() {
     setPage(0);
   };
 
-  // useEffect(() => {
-  //     setTimeout(() => {
-  //         setTempo(true);
-  //     }, 3000);
-  // })
+  useEffect(() => {
+    const listarPersonagens = async () => {
+      setListaPersonagens([]);
 
-  // useEffect(() => {
-  //   listarPersonagens();
-  //   // console.log('todos os resultados -- ', listaPersonagens.name)
-  // }, []);
-
-  const listarPersonagens = async () => {
-    setListaPersonagens([]);
-
-    for (let i = 1; i < 43; i++) {
-      await apiSerice
-        .get("character/?page=" + i)
-        .then((response) => {
-          if (response.data.results)
-            setListaPersonagens((lista) => [...lista, response.data.results]);
-          // console.log("result -- ", response.data.results);
-        })
-        .catch((error) => {
-          console.log("erro -- ", error);
-        });
-    }
-
-    console.log("results --- ", listaPersonagens);
-  };
+      for (let i = 1; i < 43; i++) {
+        await apiSerice
+          .get("character/?page=" + i)
+          .then((response) => {
+            if (response.data.results)
+              response.data.results.map((item) => {
+                setListaPersonagens((lista) => [...lista, item]);
+              });
+          })
+          .catch((error) => {
+            console.log("erro -- ", error);
+          });
+      }
+    };
+    listarPersonagens();
+  }, []);
 
   return (
     <>
-      <Grid>
+      {/* <Grid>
         <Card>
           <CardMedia
             component="audio"
@@ -77,7 +84,7 @@ export default function Personagem() {
             src="audio/rick-and-morty-theme-song-[hd]-made-with-Voicemod.mp3"
           ></CardMedia>
         </Card>
-      </Grid>
+      </Grid> */}
 
       <Box
         style={{
@@ -91,48 +98,54 @@ export default function Personagem() {
           paddingLeft: "10rem",
         }}
       >
-        <Button
+        {/* <Button
           variant="outlined"
           color="primary"
           sx={{ ml: "2rem", mb: "2rem", mt: "2rem", color: "#043c6e", background: '#60a85f', fontWeight: 'bold' }}
           onClick={() => listarPersonagens()}
         >
           Listar Personagens
-        </Button>
+        </Button> */}
         {listaPersonagens.length !== 0 && (
           <Paper
             sx={{
               opacity: 0.8,
-              width: "40rem",
+              width: "35rem",
               height: "25rem",
               background: "#a6cccc",
             }}
           >
-            <TableContainer>
+            <TableContainer sx={{ ml: "2rem", width: "30rem" }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
-                  <TableRow>Nome</TableRow>
+                  <TableRow sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+                    Nome
+                  </TableRow>
                 </TableHead>
+                <Divider />
                 <TableBody>
-                  {listaPersonagens.length &&
-                    listaPersonagens
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((item) => {
-                        return (
-                          <TableRow hover role="checkbox" tabIndex={-1}>
-                            <Typography>{item[0].name}</Typography>
-                          </TableRow>
-                        );
-                      })}
+                  {listaPersonagens
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((item) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} onClick={handleOpen}>
+                          <Typography
+                            sx={{
+                              fontSize: "1.2rem",
+                              ":hover": { background: "#88e23b" },
+                            }}
+                          >
+                            {item.name}
+                          </Typography>
+                        </TableRow>
+                      );
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               component="div"
-              count={100}
+              count={826}
               page={page}
               onPageChange={handleChangePage}
               rowsPerPage={rowsPerPage}
@@ -140,18 +153,23 @@ export default function Personagem() {
             />
           </Paper>
         )}
-      </Box>
 
-      {/* <div>
-                <Paper  sx={{ opacity: 0.8, width: '20rem', ml: '20rem' }}>
-                    <FormControl>
-                        <FormLabel>
-                            Nome
-                        </FormLabel>
-                        <Divider sx={{ ml: "2rem" }} />
-                    </FormControl>
-                </Paper>
-            </div> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Text in a modal
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </Box>
+        </Modal>
+      </Box>
     </>
   );
 }
