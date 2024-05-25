@@ -84,12 +84,15 @@ export default function Personagem() {
           });
       }
     };
-    listarPersonagens();
+
+    setTimeout(() => {
+      listarPersonagens();
+    }, 3000);    
   }, []);
 
   return (
     <>
-      {/* <Grid>
+      <Grid>
         <Card>
           <CardMedia
             component="audio"
@@ -97,7 +100,7 @@ export default function Personagem() {
             src="audio/rick-and-morty-theme-song-[hd]-made-with-Voicemod.mp3"
           ></CardMedia>
         </Card>
-      </Grid> */}
+      </Grid>
 
       <Box
         style={{
@@ -111,14 +114,6 @@ export default function Personagem() {
           paddingLeft: "10rem",
         }}
       >
-        {/* <Button
-          variant="outlined"
-          color="primary"
-          sx={{ ml: "2rem", mb: "2rem", mt: "2rem", color: "#043c6e", background: '#60a85f', fontWeight: 'bold' }}
-          onClick={() => listarPersonagens()}
-        >
-          Listar Personagens
-        </Button> */}
         {listaPersonagens.length !== 0 && (
           <Paper
             sx={{
@@ -167,6 +162,9 @@ export default function Personagem() {
           </Paper>
         )}
 
+
+
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -178,7 +176,7 @@ export default function Personagem() {
               {personagem.name}
             </Typography>
             <Card>
-              <CardMedia component='img' image={imagemPersonagem} sx={{ height: '20rem',  }}>                
+              <CardMedia component='img' image={imagemPersonagem} sx={{ height: '20rem' }}>                
               </CardMedia>
             </Card>
             <Typography id="modal-modal-description" sx={{ mt: 2, color: '#043c6e' }}>
