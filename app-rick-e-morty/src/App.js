@@ -20,7 +20,7 @@ function App() {
       </div>
 
       <HashRouter>
-        <Typography sx={{ background: '#a6cccc', height: '9rem', position: 'fixed', width: '100%' }}>
+        <Typography sx={{ background: '#a6cccc', height: '9rem', position: 'fixed', width: '100%', top: '0.5rem', zIndex: 1 }}>
           <Button component={Link} to="/" variant="outlined" 
                   sx={{ mt: '6rem', ml: '2rem', borderColor:'#A6EEE6FF', 
                         color:'#A6EEE6FF', background: '#043c6e'}}>
@@ -40,7 +40,7 @@ function App() {
         </Typography>
 
         <div>
-          <Typography>
+          <Typography sx= {{ mt: '9rem' }}>
             <Routes>
               <Route path="/" exact element={<Principal />}></Route>
               <Route path="/personagens" exact element={<Personagem />}></Route>

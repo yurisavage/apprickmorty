@@ -19,7 +19,7 @@ export default function Galeria() {
                 style={{
                 backgroundImage: `url(img/rick-morty3.gif)`,
                 }}
-                sx={{ height: "40rem",  backgroundSize: "cover" }}
+                sx={{ width: 'auto', height: "40rem",  backgroundSize: "cover" }}
             >
             </Box>
         </>
