@@ -31,18 +31,31 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  background: "#ebe480"
 };
 
 export default function Personagem() {
   const [listaPersonagens, setListaPersonagens] = useState([]);
-  const [tempo, setTempo] = useState(false);
+  const [imagemPersonagem, setImagemPersonagem] = useState(null);
+  const [personagem, setPersonagem] = useState('');
+  const [origem, setOrigem] = useState('');
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [open, setOpen] = useState(false);  
   const handleClose = () => setOpen(false);
+
+  const handleOpen = (personagem) => {
+    setImagemPersonagem(null)
+    setImagemPersonagem(personagem.image)
+    setPersonagem('')
+    setPersonagem(personagem)
+    setOrigem('');
+    setOrigem(personagem.origin.name)
+
+    setOpen(true);
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -128,7 +141,7 @@ export default function Personagem() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((item) => {
                       return (
-                        <TableRow hover role="checkbox" tabIndex={-1} onClick={handleOpen}>
+                        <TableRow hover role="checkbox" tabIndex={-1} onClick={() => handleOpen(item)}>
                           <Typography
                             sx={{
                               fontSize: "1.2rem",
@@ -161,11 +174,21 @@ export default function Personagem() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
+            <Typography id="modal-modal-title" variant="h6" component="h2" sx= {{ mb: '1rem', fontSize: '2rem', color: '#043c6e', fontWeight: 'bold' }}>
+              {personagem.name}
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            <Card>
+              <CardMedia component='img' image={imagemPersonagem} sx={{ height: '20rem',  }}>                
+              </CardMedia>
+            </Card>
+            <Typography id="modal-modal-description" sx={{ mt: 2, color: '#043c6e' }}>
+              Status: {personagem.status}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1, color: '#043c6e' }}>
+              Espécie: {personagem.species}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1, color: '#043c6e' }}>
+              Origem: {origem}
             </Typography>
           </Box>
         </Modal>
