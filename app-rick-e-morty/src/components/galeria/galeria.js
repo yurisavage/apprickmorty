@@ -11,7 +11,8 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    background: "#ebe480"
+    background: "#ebe480",
+    borderRadius: '3rem'
   };
 
 export default function Galeria() {
@@ -62,11 +63,11 @@ export default function Galeria() {
         <>
             <Grid>
                 <Card>
-                    {/* <CardMedia
+                    <CardMedia
                         component="audio"
                         autoPlay
-                        src="audio/evil-morty-theme-made-with-Voicemod.mp3"
-                    ></CardMedia> */}
+                        src="audio/For The Damaged Coda - EPIC.mp3"
+                    ></CardMedia>
                 </Card> 
             </Grid>
 
@@ -78,7 +79,7 @@ export default function Galeria() {
                 
                 <div>
                 <Box sx={{ width: '10rem', height: '10rem', borderRadius: '20rem', background: "#043c6e",
-                            marginTop: '-2rem', ml: '0.5rem'
+                            marginTop: '-2rem', ml: '0.5rem', ":hover": { background: "#6b7132" }
                  }}
                     onClick={() => handleOpen(2)}
                  >
@@ -91,7 +92,7 @@ export default function Galeria() {
                 </Box>
 
                 <Box sx={{ width: '10rem', height: '10rem', borderRadius: '20rem', background: "#043c6e", 
-                            marginTop: '4rem', ml: '0.5rem'
+                            marginTop: '4rem', ml: '0.5rem', ":hover": { background: "#6b7132" }
                 }}
                     onClick={() => handleOpen(4)}
                 >
@@ -106,7 +107,7 @@ export default function Galeria() {
 
                 <div>
                 <Box sx={{ mt: '10rem', width: '10rem', height: '10rem', borderRadius: '20rem', background: "#043c6e", 
-                            marginTop: '8rem' }}
+                            marginTop: '8rem', ":hover": { background: "#6b7132" } }}
                     onClick={() => handleOpen(1)}
                 >
                     <Typography sx={{ color: '#ebe480', fontWeight: 'bold', fontSize: '2rem', 
@@ -120,7 +121,7 @@ export default function Galeria() {
 
                 <div>
                 <Box sx={{ width: '10rem', height: '10rem', borderRadius: '20rem', background: "#043c6e", 
-                            marginTop: '-2rem'
+                            marginTop: '-2rem', ":hover": { background: "#6b7132" }
                         }}
                     onClick={() => handleOpen(3)}
                 >
@@ -133,7 +134,7 @@ export default function Galeria() {
                 </Box>
 
                 <Box sx={{ width: '10rem', height: '10rem', borderRadius: '20rem', background: "#043c6e", 
-                            marginTop: '4rem'
+                            marginTop: '4rem', ":hover": { background: "#6b7132" }
                         }}
                         onClick={() => handleOpen(5)}
                 >
@@ -153,14 +154,15 @@ export default function Galeria() {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{ mr: '15rem' }}
             >
                 <Box sx={style}>
-                    <Card>
-                        <CardMedia component='img' image={imagemPersonagem} sx={{ height: '15rem' }}>                
+                    <Card sx={{ borderRadius: '3rem' }}>
+                        <CardMedia component='img' image={imagemPersonagem} sx={{ height: '15rem', borderRadius: '3rem' }}>                
                         </CardMedia>
                     </Card>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        {descricao}
+                        &nbsp;&nbsp;&nbsp;{descricao}
                     </Typography>
                 </Box>
             </Modal>
